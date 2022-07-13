@@ -1,23 +1,18 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace TaskBarManager {
     static class Program {
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        public static IntPtr taskbarHWnd;
-
-        [STAThread]
         static void Main() {
-            taskbarHWnd = FindWindow("Shell_SecondaryTrayWnd", null);
+            Taskbar mainTaskbar = new Taskbar(true, null, TaskbarAccent.AccentState.ACCENT_DISABLED);
+            mainTaskbar.FixTaskbar();
+            mainTaskbar.RegisterEvents();
 
-            TaskBarTransparency.SetTaskbarTransparent(taskbarHWnd);
-            TaskBarPositionSize.SetTaskbarPositionSize(taskbarHWnd);
+            var secondaryTaskbarPosition = new TaskbarPosition.TaskbarRect(2560, 1391, 1913, 40);
+            Taskbar secondaryTaskbar = new Taskbar(false, secondaryTaskbarPosition, TaskbarAccent.AccentState.ACCENT_ENABLE_TRANSPARANT);
+            secondaryTaskbar.FixTaskbar();
+            secondaryTaskbar.RegisterEvents();
 
-            EventManager.RegisterEvents();
-
-            Console.WriteLine("Starting message pump");
+            Console.WriteLine("Starting Message Pump...");
             EventManager.StartMessagePump();
         }
     }

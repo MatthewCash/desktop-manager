@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
 
-static class TaskBarTransparency {  
+static class TaskbarAccent {  
     [DllImport("user32.dll")]
-    public static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+    static extern int SetWindowCompositionAttribute(IntPtr hWnd, ref WindowCompositionAttributeData data);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct WindowCompositionAttributeData {
@@ -33,14 +33,14 @@ static class TaskBarTransparency {
         public int AnimationId;
     }
 
-    public static void SetTaskbarTransparent(IntPtr taskbarHWnd) {
+    public static void SetAccentState(IntPtr taskbarHWnd, AccentState accentState) {
         AccentPolicy accent = new AccentPolicy();
         
-        accent.AccentState = AccentState.ACCENT_ENABLE_TRANSPARANT;
+        accent.AccentState = accentState;
 
         int accentStructSize = Marshal.SizeOf(accent);
         
-        IntPtr  accentPtr = Marshal.AllocHGlobal(accentStructSize);
+        IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
         Marshal.StructureToPtr(accent, accentPtr, false);
 
         var data = new WindowCompositionAttributeData();
