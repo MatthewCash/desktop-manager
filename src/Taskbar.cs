@@ -1,36 +1,63 @@
 using System;
-using System.Runtime.InteropServices;
 
 class Taskbar {
-    [DllImport("user32.dll", SetLastError = true)]
-    static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    public IntPtr taskbarHandle;
+    public IntPtr startButtonHandle;
+    public IntPtr clockHandle;
+    public IntPtr taskListContainerHandle;
+    public IntPtr taskListHandle;
+    public IntPtr trayNotifyHandle;
 
-    public IntPtr hWnd;
+    public bool primary;
 
     TaskbarPosition.TaskbarRect position = null;
     TaskbarAccent.AccentState accentState;
 
     EventManager eventManager;
 
-    public Taskbar(Boolean primary, TaskbarPosition.TaskbarRect position, TaskbarAccent.AccentState accentState) {
+    public Taskbar(bool primary, TaskbarPosition.TaskbarRect position, TaskbarAccent.AccentState accentState) {
         String taskbarClass = primary ? "Shell_TrayWnd" : "Shell_SecondaryTrayWnd";
-        hWnd = FindWindow(taskbarClass, null);
 
+        this.primary = primary;
         this.position = position;
         this.accentState = accentState;
+
+        taskbarHandle = User32Wrapper.FindWindow(taskbarClass, null);
+
+        startButtonHandle = User32Wrapper.FindWindowEx(taskbarHandle, IntPtr.Zero, "Start", null);
+        if (primary) {
+            trayNotifyHandle = User32Wrapper.FindWindowEx(taskbarHandle, IntPtr.Zero, "TrayNotifyWnd", null);
+            IntPtr reBarHandle = User32Wrapper.FindWindowEx(taskbarHandle, IntPtr.Zero, "ReBarWindow32", null);
+            taskListContainerHandle = User32Wrapper.FindWindowEx(reBarHandle, IntPtr.Zero, "MSTaskSwWClass", null);
+        } else {
+            clockHandle = User32Wrapper.FindWindowEx(taskbarHandle, IntPtr.Zero, "ClockButton", null);
+            taskListContainerHandle = User32Wrapper.FindWindowEx(taskbarHandle, IntPtr.Zero, "WorkerW", null);
+        }
+        taskListHandle = User32Wrapper.FindWindowEx(taskListContainerHandle, IntPtr.Zero, "MSTaskListWClass", null);
     }
 
     public void SetPosition() {
-        TaskbarPosition.SetTaskbarPositionSize(hWnd, position);
+        TaskbarPosition.SetTaskbarPositionSize(taskbarHandle, position);
     }
 
     public void SetAccentState() {
-        TaskbarAccent.SetAccentState(hWnd, accentState);
+        TaskbarAccent.SetAccentState(taskbarHandle, accentState);
     }
 
     public void FixTaskbar() {
         if (position != null) SetPosition();
         SetAccentState();
+
+        if (!primary) {
+            // Hide Start Button
+            User32Wrapper.ShowWindow(startButtonHandle, 11);
+            User32Wrapper.ShowWindow(startButtonHandle, 0);
+
+            // Move Clock to Start
+            int clockWidth = 70;
+            User32Wrapper.MoveWindow(clockHandle, 0, 0, clockWidth, position.height, true);
+            User32Wrapper.MoveWindow(taskListContainerHandle, clockWidth, 0, position.width - clockWidth, position.height, true);
+        }
     }
 
     public void RegisterEvents() {

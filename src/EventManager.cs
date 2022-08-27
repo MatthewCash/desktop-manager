@@ -30,7 +30,7 @@ class EventManager {
 
     public void RegisterEvents() {
         uint taskBarProcessId;
-        GetWindowThreadProcessId(taskbar.hWnd, out taskBarProcessId);
+        GetWindowThreadProcessId(taskbar.taskbarHandle, out taskBarProcessId);
 
         WinEventDelegate locationChangeDelegate = new WinEventDelegate(OnObjectLocationChange);
         eventDelegates.Add(locationChangeDelegate);
@@ -46,7 +46,7 @@ class EventManager {
     }
 
     void OnObjectLocationChange(IntPtr hWinEventHook, uint eventType, IntPtr hWnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) {
-        if (hWnd != taskbar.hWnd) return;
+        if (hWnd != taskbar.taskbarHandle) return;
 
         taskbar.FixTaskbar();
     }
