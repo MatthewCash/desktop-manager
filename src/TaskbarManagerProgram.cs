@@ -3,6 +3,8 @@ using System;
 namespace TaskBarManager {
     static class Program {
         static void Main() {
+            Config.LoadConfig();
+
             Taskbar mainTaskbar = new Taskbar(true, null, TaskbarAccent.AccentState.ACCENT_DISABLED);
             mainTaskbar.FixTaskbar();
             mainTaskbar.RegisterEvents();

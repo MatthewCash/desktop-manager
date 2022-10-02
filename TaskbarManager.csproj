@@ -15,4 +15,7 @@
         <OutputPath>bin\release\</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="Tomlyn" Version="0.15.0" />
+    </ItemGroup>
 </Project>
