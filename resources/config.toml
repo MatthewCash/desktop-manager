@@ -1,2 +1,17 @@
 [window_transparency]
 example_class = 200
+
+[taskbars]
+# Accent state should be an integer of
+# ACCENT_DISABLED = 0
+# ACCENT_ENABLE_GRADIENT = 1
+# ACCENT_ENABLE_TRANSPARENTGRADIENT = 2
+# ACCENT_ENABLE_BLURBEHIND = 3
+# ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
+# ACCENT_ENABLE_TRANSPARANT = 6
+primary_accentstate = 0
+secondary_accentstate = 6
+secondary_position = [ 2560, 1400, 1913, 40 ] # x, y, width, height
+
+[monitors]
+1 = [ 2560, -720 ] # monitor index = x, y

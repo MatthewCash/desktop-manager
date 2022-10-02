@@ -6,7 +6,24 @@ using System.Collections.Generic;
 
 class Config {
     [DataMember(Name = "window_transparency")]
-    public Dictionary<string, byte> transparentWindows { get; set; }
+    public Dictionary<String, byte> transparentWindows { get; set; }
+
+    public class TaskbarConfig {
+        [DataMember(Name = "primary_accentstate")]
+        public uint primaryAccentState { get; set; }
+        
+        [DataMember(Name = "secondary_accentstate")]
+        public uint secondaryAccentState { get; set; }
+        
+        [DataMember(Name = "secondary_position")]
+        public int[] secondaryPosition { get; set; }
+    }
+
+    [DataMember(Name = "taskbars")]
+    public TaskbarConfig taskbars { get; set; }
+
+    [DataMember(Name = "monitors")]
+    public Dictionary<uint, int[]> monitors { get; set; }
 
     static Config config;
 
