@@ -7,13 +7,25 @@ namespace TaskBarManager {
 
             var taskbarConfig = Config.GetConfig().taskbars;
 
-            Taskbar mainTaskbar = new Taskbar(true, null, (TaskbarAccent.AccentState) taskbarConfig.primaryAccentState);
+            Taskbar mainTaskbar = new Taskbar(
+                true,
+                null,
+                (TaskbarAccent.AccentState) taskbarConfig.primaryAccentState,
+                taskbarConfig.primaryHideStart,
+                taskbarConfig.primaryClockToStart
+            );
             mainTaskbar.FixTaskbar();
             mainTaskbar.RegisterEvents();
 
             var sPos = taskbarConfig.secondaryPosition;
             var secondaryTaskbarPosition = new TaskbarPosition.TaskbarRect(sPos[0], sPos[1], sPos[2], sPos[3]);
-            Taskbar secondaryTaskbar = new Taskbar(false, secondaryTaskbarPosition, (TaskbarAccent.AccentState) taskbarConfig.secondaryAccentState);
+            Taskbar secondaryTaskbar = new Taskbar(
+                false,
+                secondaryTaskbarPosition,
+                (TaskbarAccent.AccentState) taskbarConfig.secondaryAccentState,
+                taskbarConfig.secondaryHideStart,
+                taskbarConfig.secondaryClockToStart
+            );
             secondaryTaskbar.FixTaskbar();
             secondaryTaskbar.RegisterEvents();
             

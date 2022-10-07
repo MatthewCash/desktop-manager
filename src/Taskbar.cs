@@ -9,18 +9,28 @@ class Taskbar {
     public IntPtr trayNotifyHandle;
 
     public bool primary;
+    public bool hideStart;
+    public bool clockToStart;
 
     TaskbarPosition.TaskbarRect position = null;
     TaskbarAccent.AccentState accentState;
 
     EventManager eventManager;
 
-    public Taskbar(bool primary, TaskbarPosition.TaskbarRect position, TaskbarAccent.AccentState accentState) {
+    public Taskbar(
+        bool primary,
+        TaskbarPosition.TaskbarRect position,
+        TaskbarAccent.AccentState accentState,
+        bool hideStart = false,
+        bool clockToStart = false
+    ) {
         String taskbarClass = primary ? "Shell_TrayWnd" : "Shell_SecondaryTrayWnd";
 
         this.primary = primary;
         this.position = position;
         this.accentState = accentState;
+        this.hideStart = hideStart;
+        this.clockToStart = clockToStart;
 
         taskbarHandle = User32Wrapper.FindWindow(taskbarClass, null);
 
@@ -48,12 +58,12 @@ class Taskbar {
         if (position != null) SetPosition();
         SetAccentState();
 
-        if (!primary) {
-            // Hide Start Button
+        if (hideStart) {
             User32Wrapper.ShowWindow(startButtonHandle, 11);
             User32Wrapper.ShowWindow(startButtonHandle, 0);
+        }
 
-            // Move Clock to Start
+        if (clockToStart) {
             int clockWidth = 70;
             User32Wrapper.MoveWindow(clockHandle, 0, 0, clockWidth, position.height, true);
             User32Wrapper.MoveWindow(taskListContainerHandle, clockWidth, 0, position.width - clockWidth, position.height, true);

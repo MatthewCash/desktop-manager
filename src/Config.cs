@@ -12,11 +12,23 @@ class Config {
         [DataMember(Name = "primary_accentstate")]
         public uint primaryAccentState { get; set; }
         
+        [DataMember(Name = "primary_hide_start")]
+        public bool primaryHideStart { get; set; }
+        
+        [DataMember(Name = "primary_clock_to_start")]
+        public bool primaryClockToStart { get; set; }
+        
         [DataMember(Name = "secondary_accentstate")]
         public uint secondaryAccentState { get; set; }
         
         [DataMember(Name = "secondary_position")]
         public int[] secondaryPosition { get; set; }
+        
+        [DataMember(Name = "secondary_hide_start")]
+        public bool secondaryHideStart { get; set; }
+        
+        [DataMember(Name = "secondary_clock_to_start")]
+        public bool secondaryClockToStart { get; set; }
     }
 
     [DataMember(Name = "taskbars")]
