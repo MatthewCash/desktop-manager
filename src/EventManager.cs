@@ -62,7 +62,7 @@ class EventManager {
     }
 
     public static void StartMessagePump() {
-        User32Wrapper.MSG msg = new User32Wrapper.MSG();
+        var msg = new User32Wrapper.MSG();
         while (User32Wrapper.GetMessage(ref msg, IntPtr.Zero, 0, 0)) {
             if (WM_CUSTOM_EXIT == msg.message) break;
 
