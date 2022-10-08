@@ -9,30 +9,21 @@ class Config {
     public Dictionary<String, byte> transparentWindows { get; set; }
 
     public class TaskbarConfig {
-        [DataMember(Name = "primary_accentstate")]
-        public uint primaryAccentState { get; set; }
+        [DataMember(Name = "accentstate")]
+        public uint accentState { get; set; }
         
-        [DataMember(Name = "primary_hide_start")]
-        public bool primaryHideStart { get; set; }
+        [DataMember(Name = "position")]
+        public int[] position { get; set; }
+
+        [DataMember(Name = "hide_start")]
+        public bool hideStart { get; set; }
         
-        [DataMember(Name = "primary_clock_to_start")]
-        public bool primaryClockToStart { get; set; }
-        
-        [DataMember(Name = "secondary_accentstate")]
-        public uint secondaryAccentState { get; set; }
-        
-        [DataMember(Name = "secondary_position")]
-        public int[] secondaryPosition { get; set; }
-        
-        [DataMember(Name = "secondary_hide_start")]
-        public bool secondaryHideStart { get; set; }
-        
-        [DataMember(Name = "secondary_clock_to_start")]
-        public bool secondaryClockToStart { get; set; }
+        [DataMember(Name = "clock_to_start")]
+        public bool clockToStart { get; set; }
     }
 
     [DataMember(Name = "taskbars")]
-    public TaskbarConfig taskbars { get; set; }
+    public Dictionary<String, TaskbarConfig> taskbars { get; set; }
 
     [DataMember(Name = "monitors")]
     public Dictionary<uint, int[]> monitors { get; set; }

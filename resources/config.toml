@@ -1,7 +1,6 @@
 [window_transparency]
 example_class = 200
 
-[taskbars]
 # Accent state should be an integer of
 # ACCENT_DISABLED = 0
 # ACCENT_ENABLE_GRADIENT = 1
@@ -9,13 +8,17 @@ example_class = 200
 # ACCENT_ENABLE_BLURBEHIND = 3
 # ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
 # ACCENT_ENABLE_TRANSPARANT = 6
-primary_accentstate = 0
-primary_hide_start = true
-primary_clock_to_start = true
-secondary_accentstate = 6
-secondary_position = [ 2560, 1400, 1913, 40 ] # x, y, width, height
-secondary_hide_start = true
-secondary_clock_to_start = true
+
+[taskbars.primary]
+accentstate = 0
+hide_start = true
+clock_to_start = true
+
+[taskbars.secondary]
+accentstate = 6
+position = [ 2560, 1400, 1913, 40 ] # x, y, width, height
+hide_start = true
+clock_to_start = true
 
 [monitors]
 1 = [ 2560, -720 ] # monitor index = x, y

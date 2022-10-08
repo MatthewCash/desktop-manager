@@ -5,30 +5,34 @@ namespace TaskBarManager {
         static void Main() {
             Config.LoadConfig();
 
-            var taskbarConfig = Config.GetConfig().taskbars;
+            Config.TaskbarConfig primaryTaskbar;
+            if (Config.GetConfig().taskbars.TryGetValue("primary", out primaryTaskbar)) {
+                Taskbar taskbar = new Taskbar(
+                    true,
+                    null,
+                    (TaskbarAccent.AccentState)primaryTaskbar.accentState,
+                    primaryTaskbar.hideStart,
+                    primaryTaskbar.clockToStart
+                );
+                taskbar.FixTaskbar();
+                taskbar.RegisterEvents();
+            }
 
-            Taskbar mainTaskbar = new Taskbar(
-                true,
-                null,
-                (TaskbarAccent.AccentState) taskbarConfig.primaryAccentState,
-                taskbarConfig.primaryHideStart,
-                taskbarConfig.primaryClockToStart
-            );
-            mainTaskbar.FixTaskbar();
-            mainTaskbar.RegisterEvents();
+            Config.TaskbarConfig secondaryTaskbar;
+            if (Config.GetConfig().taskbars.TryGetValue("secondary", out secondaryTaskbar)) {
+                var sPos = secondaryTaskbar.position;
+                var secondaryTaskbarPosition = new TaskbarPosition.TaskbarRect(sPos[0], sPos[1], sPos[2], sPos[3]);
+                Taskbar taskbar = new Taskbar(
+                    false,
+                    secondaryTaskbarPosition,
+                    (TaskbarAccent.AccentState) secondaryTaskbar.accentState,
+                    secondaryTaskbar.hideStart,
+                    secondaryTaskbar.clockToStart
+                );
+                taskbar.FixTaskbar();
+                taskbar.RegisterEvents();
+            }
 
-            var sPos = taskbarConfig.secondaryPosition;
-            var secondaryTaskbarPosition = new TaskbarPosition.TaskbarRect(sPos[0], sPos[1], sPos[2], sPos[3]);
-            Taskbar secondaryTaskbar = new Taskbar(
-                false,
-                secondaryTaskbarPosition,
-                (TaskbarAccent.AccentState) taskbarConfig.secondaryAccentState,
-                taskbarConfig.secondaryHideStart,
-                taskbarConfig.secondaryClockToStart
-            );
-            secondaryTaskbar.FixTaskbar();
-            secondaryTaskbar.RegisterEvents();
-            
             foreach(var item in Config.GetConfig().monitors) {
                 MonitorPosition.SetMonitorPosition(item.Key, item.Value[0], item.Value[1]);
             }
