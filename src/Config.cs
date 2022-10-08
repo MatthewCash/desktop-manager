@@ -9,7 +9,7 @@ class Config {
     public Dictionary<String, byte> transparentWindows { get; set; }
 
     public class TaskbarConfig {
-        [DataMember(Name = "accentstate")]
+        [DataMember(Name = "accent_state")]
         public uint accentState { get; set; }
         
         [DataMember(Name = "position")]

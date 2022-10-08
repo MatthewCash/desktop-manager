@@ -10,12 +10,12 @@ example_class = 200
 # ACCENT_ENABLE_TRANSPARANT = 6
 
 [taskbars.primary]
-accentstate = 0
+accent_state = 0
 hide_start = true
 clock_to_start = true
 
 [taskbars.secondary]
-accentstate = 6
+accent_state = 6
 position = [ 2560, 1400, 1913, 40 ] # x, y, width, height
 hide_start = true
 clock_to_start = true
