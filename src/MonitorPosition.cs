@@ -1,9 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 
-static class MonitorPosition
-{
-    public static void GetMonitors() {
+static class MonitorPosition {
+    public static void PrintMonitors() {
         for (uint i = 0; true; i ++) {
             var device = new User32Wrapper.DISPLAY_DEVICE();
             device.cb = Marshal.SizeOf(device);
@@ -25,8 +24,7 @@ static class MonitorPosition
         }
     }
 
-    public static void SetMonitorPosition(uint displayIndex, int x, int y)
-    {
+    public static void SetMonitorPosition(uint displayIndex, int x, int y) {
         string deviceName = "\\\\.\\DISPLAY" + (displayIndex + 1);
 
         var newMode = new User32Wrapper.DEVMODE();
