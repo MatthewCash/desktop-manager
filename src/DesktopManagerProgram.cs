@@ -1,6 +1,6 @@
 using System;
 
-namespace TaskBarManager {
+namespace DesktopManager {
     static class Program {
         static void Main() {
             Config.LoadConfig();
