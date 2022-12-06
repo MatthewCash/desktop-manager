@@ -22,7 +22,7 @@ static class TaskbarAccent {
         ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
         ACCENT_ENABLE_BLURBEHIND = 3,
         ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
-        ACCENT_ENABLE_TRANSPARANT = 6,
+        ACCENT_ENABLE_TRANSPARENT = 6,
     }
 
     [StructLayout(LayoutKind.Sequential)]
