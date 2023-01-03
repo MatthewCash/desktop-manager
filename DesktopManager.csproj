@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
+        <NoWarn>NU1701</NoWarn>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <OutputType>Exe</OutputType>
@@ -16,6 +17,7 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <ItemGroup>
+      <PackageReference Include="MouseKeyHook" Version="5.6.0" />
       <PackageReference Include="Tomlyn" Version="0.15.0" />
     </ItemGroup>
 </Project>
