@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-static class TaskbarAccent {  
+static class WindowAccentState {  
     [DllImport("user32.dll")]
     static extern int SetWindowCompositionAttribute(IntPtr hWnd, ref WindowCompositionAttributeData data);
 
@@ -33,7 +33,7 @@ static class TaskbarAccent {
         public int AnimationId;
     }
 
-    public static void SetAccentState(IntPtr taskbarHWnd, AccentState accentState) {
+    public static void SetAccentState(IntPtr hWnd, AccentState accentState) {
         AccentPolicy accent = new AccentPolicy();
         
         accent.AccentState = accentState;
@@ -48,7 +48,7 @@ static class TaskbarAccent {
         data.SizeOfData = accentStructSize;
         data.Data = accentPtr;
 
-        SetWindowCompositionAttribute(taskbarHWnd, ref data);
+        SetWindowCompositionAttribute(hWnd, ref data);
 
         Marshal.FreeHGlobal(accentPtr);
     }

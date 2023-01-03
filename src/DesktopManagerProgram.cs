@@ -10,7 +10,7 @@ namespace DesktopManager {
                 Taskbar taskbar = new Taskbar(
                     true,
                     null,
-                    (TaskbarAccent.AccentState)primaryTaskbar.accentState,
+                    (WindowAccentState.AccentState)primaryTaskbar.accentState,
                     primaryTaskbar.hideStart,
                     primaryTaskbar.clockToStart
                 );
@@ -25,7 +25,7 @@ namespace DesktopManager {
                 Taskbar taskbar = new Taskbar(
                     false,
                     secondaryTaskbarPosition,
-                    (TaskbarAccent.AccentState) secondaryTaskbar.accentState,
+                    (WindowAccentState.AccentState) secondaryTaskbar.accentState,
                     secondaryTaskbar.hideStart,
                     secondaryTaskbar.clockToStart
                 );

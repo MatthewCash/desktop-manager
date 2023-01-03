@@ -13,14 +13,14 @@ class Taskbar {
     public bool clockToStart;
 
     TaskbarPosition.TaskbarRect position = null;
-    TaskbarAccent.AccentState accentState;
+    WindowAccentState.AccentState accentState;
 
     EventManager eventManager;
 
     public Taskbar(
         bool primary,
         TaskbarPosition.TaskbarRect position,
-        TaskbarAccent.AccentState accentState,
+        WindowAccentState.AccentState accentState,
         bool hideStart = false,
         bool clockToStart = false
     ) {
@@ -51,7 +51,7 @@ class Taskbar {
     }
 
     public void SetAccentState() {
-        TaskbarAccent.SetAccentState(taskbarHandle, accentState);
+        WindowAccentState.SetAccentState(taskbarHandle, accentState);
     }
 
     public void FixTaskbar() {
