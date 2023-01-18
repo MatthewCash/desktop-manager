@@ -5,6 +5,8 @@ namespace DesktopManager {
         static void Main() {
             Config.LoadConfig();
 
+            Keybinds.RegisterKeybinds();
+
             Config.TaskbarConfig primaryTaskbar;
             if (Config.GetConfig().taskbars.TryGetValue("primary", out primaryTaskbar)) {
                 Taskbar taskbar = new Taskbar(
