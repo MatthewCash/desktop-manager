@@ -3,10 +3,10 @@ using System.Runtime.InteropServices;
 
 static class MonitorPosition {
     public static void PrintMonitors() {
-        for (uint i = 0; true; i ++) {
+        for (uint i = 0; true; i++) {
             var device = new User32Wrapper.DISPLAY_DEVICE();
             device.cb = Marshal.SizeOf(device);
-            
+
             bool success = User32Wrapper.EnumDisplayDevices(null, i, ref device, 0);
             if (!success) break;
 

@@ -31,7 +31,7 @@ public static class User32Wrapper {
     public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr hWndChildAfter, string className,  string windowTitle);
+    public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr hWndChildAfter, string className, string windowTitle);
 
     [DllImport("user32.dll")]
     public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
@@ -142,19 +142,19 @@ public static class User32Wrapper {
         Disconnect = 0x2000000
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct DISPLAY_DEVICE {
         [MarshalAs(UnmanagedType.U4)]
         public int cb;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst=32)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string DeviceName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst=128)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         public string DeviceString;
         [MarshalAs(UnmanagedType.U4)]
         public DisplayDeviceStateFlags StateFlags;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst=128)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         public string DeviceID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst=128)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         public string DeviceKey;
     }
 
@@ -162,12 +162,12 @@ public static class User32Wrapper {
     public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 
     [DllImport("user32.dll")]
-    public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DEVMODE devMode );  
+    public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DEVMODE devMode);
 
-    [DllImport("user32.dll", SetLastError = true, EntryPoint="SetWindowLongPtr")]
+    [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
     public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, long dwNewLong);
 
-    [DllImport("user32.dll", EntryPoint="GetWindowLongPtr")]
+    [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
     public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
     public const int GWL_STYLE = -16;
@@ -187,7 +187,7 @@ public static class User32Wrapper {
 
     public const uint LWA_ALPHA = 0x00000002;
 
-    [DllImport("user32.dll", EntryPoint="SetWindowPos")]
+    [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
     public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, UInt32 uFlags);
 
     public const int SWP_FRAMECHANGED = 0x0020;

@@ -10,7 +10,7 @@ namespace DesktopManager {
                 Taskbar taskbar = new Taskbar(
                     true,
                     null,
-                    (WindowAccentState.AccentState)primaryTaskbar.accentState,
+                    (WindowAccentState.AccentState) primaryTaskbar.accentState,
                     primaryTaskbar.hideStart,
                     primaryTaskbar.clockToStart
                 );
@@ -33,7 +33,7 @@ namespace DesktopManager {
                 taskbar.RegisterEvents();
             }
 
-            foreach(var item in Config.GetConfig().monitors) {
+            foreach (var item in Config.GetConfig().monitors) {
                 MonitorPosition.SetMonitorPosition(item.Key, item.Value[0], item.Value[1]);
             }
 

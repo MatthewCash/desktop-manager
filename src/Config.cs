@@ -11,13 +11,13 @@ class Config {
     public class TaskbarConfig {
         [DataMember(Name = "accent_state")]
         public uint accentState { get; set; }
-        
+
         [DataMember(Name = "position")]
         public int[] position { get; set; }
 
         [DataMember(Name = "hide_start")]
         public bool hideStart { get; set; }
-        
+
         [DataMember(Name = "clock_to_start")]
         public bool clockToStart { get; set; }
     }

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-static class WindowAccentState {  
+static class WindowAccentState {
     [DllImport("user32.dll")]
     static extern int SetWindowCompositionAttribute(IntPtr hWnd, ref WindowCompositionAttributeData data);
 
@@ -35,11 +35,11 @@ static class WindowAccentState {
 
     public static void SetAccentState(IntPtr hWnd, AccentState accentState) {
         AccentPolicy accent = new AccentPolicy();
-        
+
         accent.AccentState = accentState;
 
         int accentStructSize = Marshal.SizeOf(accent);
-        
+
         IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
         Marshal.StructureToPtr(accent, accentPtr, false);
 
