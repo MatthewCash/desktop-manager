@@ -3,21 +3,24 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <NoWarn>NU1701</NoWarn>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <RestoreFallbackFolders>clear</RestoreFallbackFolders>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <OutputType>Exe</OutputType>
         <DebugType>full</DebugType>
         <OutputPath>bin\debug\</OutputPath>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <OutputType>WinExe</OutputType>
         <DebugType>none</DebugType>
         <OutputPath>bin\release\</OutputPath>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="MouseKeyHook" Version="5.6.0" />
-      <PackageReference Include="Tomlyn" Version="0.15.0" />
+        <PackageReference Include="MouseKeyHook" Version="5.6.0" />
+        <PackageReference Include="Tomlyn" Version="0.15.0" />
     </ItemGroup>
 </Project>
