@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 using Gma.System.MouseKeyHook;
 
-static class WindowManagement {
+class WindowManagement : Keybinds.IKeybindHandler {
     [DllImport("user32.dll")]
     static extern IntPtr GetForegroundWindow();
 
@@ -15,7 +15,7 @@ static class WindowManagement {
     const int SW_MINIMIZE = 6;
     const int SW_NORMAL = 1;
 
-    public static void MouseDown(object sender, MouseEventExtArgs e) {
+    public void MouseDown(object sender, MouseEventExtArgs e) {
         if (Keybinds.trackedKeyStates[Keys.LControlKey] || Keybinds.trackedButtonStates[MouseButtons.Middle]) {
             if (e.Button == MouseButtons.XButton1) {
                 e.Handled = true;

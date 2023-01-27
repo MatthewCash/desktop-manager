@@ -5,6 +5,15 @@ using System.Collections.Generic;
 using Gma.System.MouseKeyHook;
 
 static class Keybinds {
+    public interface IKeybindHandler {
+        public void MouseDown(object sender, MouseEventExtArgs e) { }
+        public void MouseUp(object sender, MouseEventExtArgs e) { }
+        public void KeyDown(object sender, KeyEventArgs e) { }
+        public void KeyUp(object sender, KeyEventArgs e) { }
+    }
+
+    public static List<IKeybindHandler> handlers = new List<IKeybindHandler>();
+
     public static IKeyboardMouseEvents inputHook;
 
     public static Dictionary<Keys, bool> trackedKeyStates = new Dictionary<Keys, bool>();
@@ -50,6 +59,11 @@ static class Keybinds {
         inputHook.KeyDown += KeyDown;
         inputHook.KeyUp += KeyUp;
 
-        inputHook.MouseDownExt += WindowManagement.MouseDown;
+        handlers.ForEach(handler => {
+            inputHook.MouseDownExt += handler.MouseDown;
+            inputHook.MouseUpExt += handler.MouseUp;
+            inputHook.KeyDown += handler.KeyDown;
+            inputHook.KeyUp += handler.KeyUp;
+        });
     }
 }

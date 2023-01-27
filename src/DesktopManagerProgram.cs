@@ -5,8 +5,6 @@ namespace DesktopManager {
         static void Main() {
             Config.LoadConfig();
 
-            Keybinds.RegisterKeybinds();
-
             Config.TaskbarConfig primaryTaskbar;
             if (Config.GetConfig().taskbars.TryGetValue("primary", out primaryTaskbar)) {
                 Taskbar taskbar = new Taskbar(
@@ -38,6 +36,9 @@ namespace DesktopManager {
             foreach (var item in Config.GetConfig().monitors) {
                 MonitorPosition.SetMonitorPosition(item.Key, item.Value[0], item.Value[1]);
             }
+
+            Keybinds.handlers.Add(new WindowManagement());
+            Keybinds.RegisterKeybinds();
 
             Console.WriteLine("Starting Message Pump...");
             EventManager.StartMessagePump();
