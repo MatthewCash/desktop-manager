@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p openssh coreutils
+#! nix-shell -i bash -p bash openssh coreutils
 
 # Stop current DesktopManager task (so files can be copied)
 ssh host "schtasks /End /TN DesktopManager"
