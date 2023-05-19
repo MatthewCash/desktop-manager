@@ -28,6 +28,9 @@ class Config {
     [DataMember(Name = "monitors")]
     public Dictionary<uint, int[]> monitors { get; set; }
 
+    [DataMember(Name = "voicemeeter_media_strip_id")]
+    public uint mediaStripId { get; set; }
+
     static Config config;
 
     public static Config GetConfig() {

@@ -37,7 +37,10 @@ namespace DesktopManager {
                 MonitorPosition.SetMonitorPosition(item.Key, item.Value[0], item.Value[1]);
             }
 
-            Keybinds.handlers.Add(new WindowManagement());
+            Keybinds.handlers.AddRange(new Keybinds.IKeybindHandler[] {
+                new WindowManagement(),
+                new VoicemeeterEq()
+            });
             Keybinds.RegisterKeybinds();
 
             Console.WriteLine("Starting Message Pump...");
