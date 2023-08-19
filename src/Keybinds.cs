@@ -1,7 +1,6 @@
 using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
-
+using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
 
 static class Keybinds {

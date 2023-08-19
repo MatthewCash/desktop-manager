@@ -1,8 +1,8 @@
 using System;
-using System.IO;
-using Tomlyn;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using Tomlyn;
 
 class Config {
     [DataMember(Name = "window_transparency")]

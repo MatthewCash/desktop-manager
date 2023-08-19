@@ -11,7 +11,7 @@ static class MonitorPosition {
             if (!success) break;
 
             Console.WriteLine(
-                String.Format(
+                string.Format(
                     "Monitor {0}:\n\tName - {1}\n\tString - {2}\n\tFlags - {3}\n\tID - {4}\n\tKey - {5}",
                     i,
                     device.DeviceName,
