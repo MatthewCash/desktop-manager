@@ -6,7 +6,7 @@ using Tomlyn;
 
 class Config {
     [DataMember(Name = "window_transparency")]
-    public Dictionary<String, byte> transparentWindows { get; set; }
+    public Dictionary<string, byte> transparentWindows { get; set; }
 
     public class TaskbarConfig {
         [DataMember(Name = "accent_state")]
@@ -23,7 +23,7 @@ class Config {
     }
 
     [DataMember(Name = "taskbars")]
-    public Dictionary<String, TaskbarConfig> taskbars { get; set; }
+    public Dictionary<string, TaskbarConfig> taskbars { get; set; }
 
     [DataMember(Name = "monitors")]
     public Dictionary<uint, int[]> monitors { get; set; }
@@ -37,35 +37,35 @@ class Config {
         return config;
     }
 
-    static String GetConfigPath() {
-        String appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        String configFilePath = Path.Combine(appDataPath, "DesktopManager", "config.toml");
+    static string GetConfigPath() {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string configFilePath = Path.Combine(appDataPath, "DesktopManager", "config.toml");
 
         return configFilePath;
     }
 
-    static void CreateConfig(String configFilePath) {
+    static void CreateConfig(string configFilePath) {
         Directory.CreateDirectory(Directory.GetParent(configFilePath).FullName);
         File.Copy(@"resources\config.toml", configFilePath);
     }
 
-    static String ReadConfigFile(String configFilePath) {
-        String[] lines = File.ReadAllLines(configFilePath);
-        String data = String.Join('\n', lines);
+    static string ReadConfigFile(string configFilePath) {
+        string[] lines = File.ReadAllLines(configFilePath);
+        string data = string.Join("\n", lines);
 
         return data;
     }
 
-    static Config ParseConfigData(String data) {
+    static Config ParseConfigData(string data) {
         return Toml.ToModel<Config>(data);
     }
 
     public static void LoadConfig() {
-        String configFilePath = GetConfigPath();
+        string configFilePath = GetConfigPath();
 
         if (!File.Exists(configFilePath)) CreateConfig(configFilePath);
 
-        String configData = ReadConfigFile(configFilePath);
+        string configData = ReadConfigFile(configFilePath);
         Config config = ParseConfigData(configData);
 
         Config.config = config;
