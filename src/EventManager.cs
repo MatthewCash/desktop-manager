@@ -17,23 +17,21 @@ class EventManager {
     const uint EVENT_OBJECT_LOCATIONCHANGE = 0x800B;
     const uint EVENT_OBJECT_FOCUS = 0x8005;
 
-    static List<WinEventDelegate> eventDelegates = new List<WinEventDelegate>();
-
-    Taskbar taskbar;
+    static readonly List<WinEventDelegate> eventDelegates = new();
+    readonly Taskbar taskbar;
 
     public EventManager(Taskbar taskbar) {
         this.taskbar = taskbar;
     }
 
     public void RegisterEvents() {
-        uint taskBarProcessId;
-        GetWindowThreadProcessId(taskbar.taskbarHandle, out taskBarProcessId);
+        GetWindowThreadProcessId(taskbar.taskbarHandle, out uint taskBarProcessId);
 
-        WinEventDelegate locationChangeDelegate = new WinEventDelegate(OnObjectLocationChange);
+        WinEventDelegate locationChangeDelegate = new(OnObjectLocationChange);
         eventDelegates.Add(locationChangeDelegate);
         SetWinEventHook(EVENT_OBJECT_LOCATIONCHANGE, EVENT_OBJECT_LOCATIONCHANGE, IntPtr.Zero, locationChangeDelegate, taskBarProcessId, 0, WINEVENT_OUTOFCONTEXT);
 
-        WinEventDelegate objectFocusDelegate = new WinEventDelegate(OnObjectFocus);
+        WinEventDelegate objectFocusDelegate = new(OnObjectFocus);
         eventDelegates.Add(objectFocusDelegate);
         SetWinEventHook(EVENT_OBJECT_FOCUS, EVENT_OBJECT_FOCUS, IntPtr.Zero, objectFocusDelegate, 0, 0, WINEVENT_OUTOFCONTEXT);
     }
@@ -45,10 +43,9 @@ class EventManager {
         GetClassName(hWnd, classNameBuffer, 256);
         String className = new String(classNameBuffer).Trim('\0');
 
-        var transparentWindows = Config.GetConfig().transparentWindows;
+        var transparentWindows = Config.GetConfig().TransparentWindows;
 
-        byte alpha;
-        if (transparentWindows.TryGetValue(className, out alpha)) {
+        if (transparentWindows.TryGetValue(className, out byte alpha)) {
             long exStyle = (long) GetWindowLongPtr(hWnd, GWL_EXSTYLE);
             if ((exStyle & WS_EX_LAYERED) == 0) SetWindowLongPtr(hWnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED);
             SetLayeredWindowAttributes(hWnd, 0, alpha, LWA_ALPHA);

@@ -5,18 +5,18 @@ using Gma.System.MouseKeyHook;
 
 static class Keybinds {
     public interface IKeybindHandler {
-        public void MouseDown(object sender, MouseEventExtArgs e) { }
-        public void MouseUp(object sender, MouseEventExtArgs e) { }
-        public void KeyDown(object sender, KeyEventArgs e) { }
-        public void KeyUp(object sender, KeyEventArgs e) { }
+        void MouseDown(object sender, MouseEventExtArgs e) { }
+        void MouseUp(object sender, MouseEventExtArgs e) { }
+        void KeyDown(object sender, KeyEventArgs e) { }
+        void KeyUp(object sender, KeyEventArgs e) { }
     }
 
-    public static List<IKeybindHandler> handlers = new List<IKeybindHandler>();
+    public static List<IKeybindHandler> handlers = new();
 
     public static IKeyboardMouseEvents inputHook;
 
-    public static Dictionary<Keys, bool> trackedKeyStates = new Dictionary<Keys, bool>();
-    public static Dictionary<MouseButtons, bool> trackedButtonStates = new Dictionary<MouseButtons, bool>();
+    public static Dictionary<Keys, bool> trackedKeyStates = new();
+    public static Dictionary<MouseButtons, bool> trackedButtonStates = new();
 
     static void KeyDown(object sender, KeyEventArgs e) {
         trackedKeyStates[e.KeyCode] = true;

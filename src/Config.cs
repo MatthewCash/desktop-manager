@@ -6,30 +6,30 @@ using Tomlyn;
 
 class Config {
     [DataMember(Name = "window_transparency")]
-    public Dictionary<string, byte> transparentWindows { get; set; }
+    public Dictionary<string, byte> TransparentWindows { get; set; }
 
     public class TaskbarConfig {
         [DataMember(Name = "accent_state")]
-        public uint accentState { get; set; }
+        public uint AccentState { get; set; }
 
         [DataMember(Name = "position")]
-        public int[] position { get; set; }
+        public int[] Position { get; set; }
 
         [DataMember(Name = "hide_start")]
-        public bool hideStart { get; set; }
+        public bool HideStart { get; set; }
 
         [DataMember(Name = "clock_to_start")]
-        public bool clockToStart { get; set; }
+        public bool ClockToStart { get; set; }
     }
 
     [DataMember(Name = "taskbars")]
-    public Dictionary<string, TaskbarConfig> taskbars { get; set; }
+    public Dictionary<string, TaskbarConfig> Taskbars { get; set; }
 
     [DataMember(Name = "monitors")]
-    public Dictionary<uint, int[]> monitors { get; set; }
+    public Dictionary<uint, int[]> Monitors { get; set; }
 
     [DataMember(Name = "voicemeeter_media_strip_id")]
-    public uint mediaStripId { get; set; }
+    public uint MediaStripId { get; set; }
 
     static Config config;
 

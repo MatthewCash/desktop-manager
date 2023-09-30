@@ -34,21 +34,22 @@ static class WindowAccentState {
     }
 
     public static void SetAccentState(IntPtr hWnd, AccentState accentState) {
-        AccentPolicy accent = new AccentPolicy();
-
-        accent.AccentState = accentState;
+        AccentPolicy accent = new() {
+            AccentState = accentState
+        };
 
         int accentStructSize = Marshal.SizeOf(accent);
 
         IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
         Marshal.StructureToPtr(accent, accentPtr, false);
 
-        var data = new WindowCompositionAttributeData();
-        data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
-        data.SizeOfData = accentStructSize;
-        data.Data = accentPtr;
+        WindowCompositionAttributeData data = new() {
+            Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
+            SizeOfData = accentStructSize,
+            Data = accentPtr
+        };
 
-        SetWindowCompositionAttribute(hWnd, ref data);
+        _ = SetWindowCompositionAttribute(hWnd, ref data);
 
         Marshal.FreeHGlobal(accentPtr);
     }

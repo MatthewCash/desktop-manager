@@ -11,9 +11,8 @@ class Taskbar {
     public bool primary;
     public bool hideStart;
     public bool clockToStart;
-
-    TaskbarPosition.TaskbarRect position = null;
-    WindowAccentState.AccentState accentState;
+    readonly TaskbarPosition.TaskbarRect position = null;
+    readonly WindowAccentState.AccentState accentState;
 
     EventManager eventManager;
 
@@ -24,7 +23,7 @@ class Taskbar {
         bool hideStart = false,
         bool clockToStart = false
     ) {
-        String taskbarClass = primary ? "Shell_TrayWnd" : "Shell_SecondaryTrayWnd";
+        string taskbarClass = primary ? "Shell_TrayWnd" : "Shell_SecondaryTrayWnd";
 
         this.primary = primary;
         this.position = position;
