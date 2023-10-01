@@ -31,6 +31,9 @@ class Config {
     [DataMember(Name = "voicemeeter_media_strip_id")]
     public uint MediaStripId { get; set; }
 
+    [DataMember(Name = "disabled_windows")]
+    public List<string> DisabledWindows { get; set; }
+
     static Config config;
 
     public static Config GetConfig() {

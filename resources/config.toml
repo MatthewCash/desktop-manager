@@ -1,4 +1,5 @@
 voicemeeter_media_strip_id = 5
+disabled_windows = []
 
 [window_transparency]
 example_class = 200

@@ -14,8 +14,19 @@ class WindowManagement : Keybinds.IKeybindHandler {
     const int SW_MINIMIZE = 6;
     const int SW_NORMAL = 1;
 
+    private static bool ShouldIgnoreWindow(IntPtr hWnd) {
+        var classNameBuffer = new char[256];
+        _ = User32Wrapper.GetClassName(hWnd, classNameBuffer, classNameBuffer.Length);
+        string className = new string(classNameBuffer).Trim('\0');
+
+        return Config.GetConfig().DisabledWindows.Contains(className);
+    }
+
     public void MouseDown(object sender, MouseEventExtArgs e) {
-        if (Keybinds.trackedKeyStates[Keys.LControlKey] || Keybinds.trackedButtonStates[MouseButtons.Middle]) {
+        if (
+            Keybinds.trackedKeyStates[Keys.LControlKey] ||
+            Keybinds.trackedButtonStates[MouseButtons.Middle]
+        ) {
             if (e.Button == MouseButtons.XButton1) {
                 e.Handled = true;
 
@@ -27,12 +38,15 @@ class WindowManagement : Keybinds.IKeybindHandler {
                 };
                 Keybinds.inputHook.MouseUpExt += handler;
 
+                var hWnd = GetForegroundWindow();
+                if (ShouldIgnoreWindow(hWnd)) return;
+
                 if (Keybinds.trackedKeyStates[Keys.LMenu]) {
                     // Restore
-                    ShowWindowAsync(GetForegroundWindow(), SW_NORMAL);
+                    ShowWindowAsync(hWnd, SW_NORMAL);
                 } else {
                     // Minimize
-                    ShowWindowAsync(GetForegroundWindow(), SW_MINIMIZE);
+                    ShowWindowAsync(hWnd, SW_MINIMIZE);
                 }
             }
             if (e.Button == MouseButtons.XButton2) {
@@ -46,7 +60,10 @@ class WindowManagement : Keybinds.IKeybindHandler {
                 };
                 Keybinds.inputHook.MouseUpExt += handler;
 
-                ShowWindowAsync(GetForegroundWindow(), SW_MAXIMIZE);
+                var hWnd = GetForegroundWindow();
+                if (ShouldIgnoreWindow(hWnd)) return;
+
+                ShowWindowAsync(hWnd, SW_MAXIMIZE);
             }
         }
     }
