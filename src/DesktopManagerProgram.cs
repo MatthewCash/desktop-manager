@@ -2,7 +2,7 @@ using System;
 
 namespace DesktopManager {
     static class Program {
-        static void Main() {
+        static void Main(string[] args) {
             Config.LoadConfig();
             var taskbarConfig = Config.GetConfig().Taskbars;
 
@@ -16,6 +16,10 @@ namespace DesktopManager {
                 );
                 taskbar.FixTaskbar();
                 taskbar.RegisterEvents();
+            }
+
+            if (args.Length > 0 && args[0] == "--print-monitors") {
+                MonitorPosition.PrintMonitors();
             }
 
             if (taskbarConfig.TryGetValue("secondary", out var secondaryTaskbar)) {
