@@ -9,6 +9,7 @@ class Taskbar {
     public IntPtr trayNotifyHandle;
 
     public bool primary;
+    public uint monitorIndex;
     public bool hideStart;
     public bool clockToStart;
     readonly TaskbarPosition.TaskbarRect position = null;
@@ -18,6 +19,7 @@ class Taskbar {
 
     public Taskbar(
         bool primary,
+        uint monitorIndex,
         TaskbarPosition.TaskbarRect position,
         WindowAccentState.AccentState accentState,
         bool hideStart = false,
@@ -26,12 +28,32 @@ class Taskbar {
         string taskbarClass = primary ? "Shell_TrayWnd" : "Shell_SecondaryTrayWnd";
 
         this.primary = primary;
+        this.monitorIndex = monitorIndex;
         this.position = position;
         this.accentState = accentState;
         this.hideStart = hideStart;
         this.clockToStart = clockToStart;
 
-        taskbarHandle = User32Wrapper.FindWindow(taskbarClass, null);
+        if (primary) {
+            taskbarHandle = User32Wrapper.FindWindow(taskbarClass, null);
+        } else {
+            var _ = User32Wrapper.EnumWindows((hWnd, lParam) => {
+                var classNameBuffer = new char[256];
+                User32Wrapper.GetClassName(hWnd, classNameBuffer, classNameBuffer.Length);
+                string className = new string(classNameBuffer).Trim('\0');
+
+                if (className != taskbarClass) return true;
+
+                var monitorHandle = User32Wrapper.MonitorFromWindow(hWnd, 0);
+                var monitorInfo = new User32Wrapper.MONITORINFOEX();
+                User32Wrapper.GetMonitorInfo(monitorHandle, monitorInfo);
+
+                string monitorName = new string(monitorInfo.szDevice).Trim('\0');
+                if (monitorName == $"\\\\.\\DISPLAY{monitorIndex + 1}") taskbarHandle = hWnd;
+
+                return true;
+            }, 0);
+        }
 
         startButtonHandle = User32Wrapper.FindWindowEx(taskbarHandle, IntPtr.Zero, "Start", null);
         if (primary) {

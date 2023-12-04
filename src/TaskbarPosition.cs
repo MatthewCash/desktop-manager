@@ -14,6 +14,13 @@ static class TaskbarPosition {
             this.width = width;
             this.height = height;
         }
+
+        public TaskbarRect(int[] position) {
+            x = position[0];
+            y = position[1];
+            width = position[2];
+            height = position[3];
+        }
     }
 
     [DllImport("user32.dll", SetLastError = true)]

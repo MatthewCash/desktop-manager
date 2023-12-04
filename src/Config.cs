@@ -9,6 +9,9 @@ class Config {
     public Dictionary<string, byte> TransparentWindows { get; set; }
 
     public class TaskbarConfig {
+        [DataMember(Name = "monitor")]
+        public int MonitorIndex { get; set; }
+
         [DataMember(Name = "accent_state")]
         public uint AccentState { get; set; }
 
@@ -23,7 +26,7 @@ class Config {
     }
 
     [DataMember(Name = "taskbars")]
-    public Dictionary<string, TaskbarConfig> Taskbars { get; set; }
+    public List<TaskbarConfig> Taskbars { get; set; }
 
     [DataMember(Name = "monitors")]
     public Dictionary<uint, int[]> Monitors { get; set; }

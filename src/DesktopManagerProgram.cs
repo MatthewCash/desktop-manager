@@ -4,40 +4,31 @@ namespace DesktopManager {
     static class Program {
         static void Main(string[] args) {
             Config.LoadConfig();
-            var taskbarConfig = Config.GetConfig().Taskbars;
-
-            if (taskbarConfig.TryGetValue("primary", out var primaryTaskbar)) {
-                Taskbar taskbar = new(
-                    true,
-                    null,
-                    (WindowAccentState.AccentState) primaryTaskbar.AccentState,
-                    primaryTaskbar.HideStart,
-                    primaryTaskbar.ClockToStart
-                );
-                taskbar.FixTaskbar();
-                taskbar.RegisterEvents();
-            }
 
             if (args.Length > 0 && args[0] == "--print-monitors") {
                 MonitorPosition.PrintMonitors();
             }
 
-            if (taskbarConfig.TryGetValue("secondary", out var secondaryTaskbar)) {
-                var sPos = secondaryTaskbar.Position;
-                var secondaryTaskbarPosition = new TaskbarPosition.TaskbarRect(sPos[0], sPos[1], sPos[2], sPos[3]);
+            var taskbarConfigs = Config.GetConfig().Taskbars;
+
+            foreach (var taskbarConfig in taskbarConfigs) {
+                var position = taskbarConfig.Position is null ? null : new TaskbarPosition.TaskbarRect(taskbarConfig.Position);
+
                 Taskbar taskbar = new(
-                    false,
-                    secondaryTaskbarPosition,
-                    (WindowAccentState.AccentState) secondaryTaskbar.AccentState,
-                    secondaryTaskbar.HideStart,
-                    secondaryTaskbar.ClockToStart
+                    taskbarConfig.MonitorIndex == -1,
+                    (uint) taskbarConfig.MonitorIndex,
+                    position,
+                    (WindowAccentState.AccentState) taskbarConfig.AccentState,
+                    taskbarConfig.HideStart,
+                    taskbarConfig.ClockToStart
                 );
+
                 taskbar.FixTaskbar();
                 taskbar.RegisterEvents();
             }
 
-            foreach (var item in Config.GetConfig().Monitors) {
-                MonitorPosition.SetMonitorPosition(item.Key, item.Value[0], item.Value[1]);
+            foreach ((uint key, var position) in Config.GetConfig().Monitors) {
+                MonitorPosition.SetMonitorPosition(key, position[0], position[1]);
             }
 
             Keybinds.handlers.AddRange(new Keybinds.IKeybindHandler[] {

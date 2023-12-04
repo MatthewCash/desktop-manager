@@ -12,16 +12,24 @@ example_class = 200
 # ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
 # ACCENT_ENABLE_TRANSPARANT = 6
 
-[taskbars.primary]
+# monitor should be the monitor index EXCEPT the primary taskbar should be -1
+
+[[taskbars]]
+monitor = -1
 accent_state = 0
 hide_start = true
 clock_to_start = true
 
-[taskbars.secondary]
+[[taskbars]]
+monitor = 1
 accent_state = 6
 position = [ 2560, 1400, 1913, 40 ] # x, y, width, height
 hide_start = true
 clock_to_start = true
+
+[[taskbars]]
+monitor = 2
+accent_state = 6
 
 [monitors]
 1 = [ 2560, -720 ] # monitor index = x, y

@@ -114,4 +114,43 @@ public static class User32Wrapper {
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, uint crKey, byte bAlpha, uint dwFlags);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+
+    public delegate bool CallBackPtr(IntPtr hwnd, int lParam);
+
+    [DllImport("user32.dll")]
+    public static extern int EnumWindows(CallBackPtr callPtr, int lPar);
+
+    [DllImport("User32.dll", CharSet = CharSet.Auto)]
+    public static extern bool GetMonitorInfo(IntPtr hmonitor, [In, Out] MONITORINFOEX info);
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+    public class MONITORINFOEX {
+        public int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
+        public RECT rcMonitor = new RECT();
+        public RECT rcWork = new RECT();
+        public int dwFlags = 0;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+        public char[] szDevice = new char[32];
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINTSTRUCT {
+        public int x;
+        public int y;
+        public POINTSTRUCT(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT {
+        public int left;
+        public int top;
+        public int right;
+        public int bottom;
+    }
 }
