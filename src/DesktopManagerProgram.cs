@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace DesktopManager {
     static class Program {
@@ -36,6 +37,9 @@ namespace DesktopManager {
                 new VoicemeeterEq()
             });
             Keybinds.RegisterKeybinds();
+
+            Thread trayIconThread = new(TrayIcon.Create);
+            trayIconThread.Start();
 
             Console.WriteLine("Starting Message Pump...");
             EventManager.StartMessagePump();
