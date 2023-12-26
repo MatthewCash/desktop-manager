@@ -44,25 +44,25 @@ class WindowManagement : Keybinds.IKeybindHandler {
 
     public void MouseDown(object sender, MouseEventExtArgs e) {
         if (
-            !(Keybinds.trackedKeyStates[Keys.LControlKey] ||
-            Keybinds.trackedButtonStates[MouseButtons.Middle])
+            !(Keybinds.TrackedKeyStates[Keys.LControlKey] ||
+            Keybinds.TrackedButtonStates[MouseButtons.Middle])
         ) return;
 
         if (e.Button == MouseButtons.XButton1) {
             e.Handled = true;
 
             void handler(object sender, MouseEventExtArgs e) {
-                Keybinds.trackedButtonStates[e.Button] = false;
+                Keybinds.TrackedButtonStates[e.Button] = false;
                 if (e.Button != MouseButtons.XButton1) return;
                 e.Handled = true;
-                Keybinds.inputHook.MouseUpExt -= handler;
+                Keybinds.InputHook.MouseUpExt -= handler;
             };
-            Keybinds.inputHook.MouseUpExt += handler;
+            Keybinds.InputHook.MouseUpExt += handler;
 
             var hWnd = GetForegroundWindow();
             if (ShouldIgnoreWindow(hWnd)) return;
 
-            if (Keybinds.trackedKeyStates[Keys.LMenu]) {
+            if (Keybinds.TrackedKeyStates[Keys.LMenu]) {
                 // Restore
                 ShowWindowAsync(hWnd, SW_NORMAL);
             } else {
@@ -74,12 +74,12 @@ class WindowManagement : Keybinds.IKeybindHandler {
             e.Handled = true;
 
             void handler(object sender, MouseEventExtArgs e) {
-                Keybinds.trackedButtonStates[e.Button] = false;
+                Keybinds.TrackedButtonStates[e.Button] = false;
                 if (e.Button != MouseButtons.XButton2) return;
                 e.Handled = true;
-                Keybinds.inputHook.MouseUpExt -= handler;
+                Keybinds.InputHook.MouseUpExt -= handler;
             };
-            Keybinds.inputHook.MouseUpExt += handler;
+            Keybinds.InputHook.MouseUpExt += handler;
 
             var hWnd = GetForegroundWindow();
             if (ShouldIgnoreWindow(hWnd)) return;

@@ -11,58 +11,58 @@ static class Keybinds {
         void KeyUp(object sender, KeyEventArgs e) { }
     }
 
-    public static List<IKeybindHandler> handlers = new();
+    public static List<IKeybindHandler> Handlers { get; } = new();
 
-    public static IKeyboardMouseEvents inputHook;
+    public static IKeyboardMouseEvents InputHook { get; private set; }
 
-    public static Dictionary<Keys, bool> trackedKeyStates = new();
-    public static Dictionary<MouseButtons, bool> trackedButtonStates = new();
+    public static Dictionary<Keys, bool> TrackedKeyStates { get; } = new();
+    public static Dictionary<MouseButtons, bool> TrackedButtonStates { get; } = new();
 
-    static void KeyDown(object sender, KeyEventArgs e) {
-        trackedKeyStates[e.KeyCode] = true;
+    private static void KeyDown(object sender, KeyEventArgs e) {
+        TrackedKeyStates[e.KeyCode] = true;
     }
 
-    static void KeyUp(object sender, KeyEventArgs e) {
-        trackedKeyStates[e.KeyCode] = false;
+    private static void KeyUp(object sender, KeyEventArgs e) {
+        TrackedKeyStates[e.KeyCode] = false;
     }
 
-    static void MouseDown(object sender, MouseEventExtArgs e) {
-        trackedButtonStates[e.Button] = true;
+    private static void MouseDown(object sender, MouseEventExtArgs e) {
+        TrackedButtonStates[e.Button] = true;
     }
 
-    static void MouseUp(object sender, MouseEventExtArgs e) {
-        trackedButtonStates[e.Button] = false;
+    private static void MouseUp(object sender, MouseEventExtArgs e) {
+        TrackedButtonStates[e.Button] = false;
     }
 
     public static void DeregisterKeybinds() {
-        inputHook.MouseDownExt -= MouseDown;
-        inputHook.MouseUpExt -= MouseUp;
-        inputHook.KeyDown -= KeyDown;
-        inputHook.KeyUp -= KeyUp;
+        InputHook.MouseDownExt -= MouseDown;
+        InputHook.MouseUpExt -= MouseUp;
+        InputHook.KeyDown -= KeyDown;
+        InputHook.KeyUp -= KeyUp;
 
-        inputHook.Dispose();
+        InputHook.Dispose();
     }
 
     public static void RegisterKeybinds() {
         foreach (Keys key in Enum.GetValues(typeof(Keys)))
-            trackedKeyStates[key] = false;
+            TrackedKeyStates[key] = false;
 
         foreach (MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
-            trackedButtonStates[button] = false;
+            TrackedButtonStates[button] = false;
 
-        inputHook = Hook.GlobalEvents();
+        InputHook = Hook.GlobalEvents();
 
         // Listeners for tracking button/key states
-        inputHook.MouseDownExt += MouseDown;
-        inputHook.MouseUpExt += MouseUp;
-        inputHook.KeyDown += KeyDown;
-        inputHook.KeyUp += KeyUp;
+        InputHook.MouseDownExt += MouseDown;
+        InputHook.MouseUpExt += MouseUp;
+        InputHook.KeyDown += KeyDown;
+        InputHook.KeyUp += KeyUp;
 
-        handlers.ForEach(handler => {
-            inputHook.MouseDownExt += handler.MouseDown;
-            inputHook.MouseUpExt += handler.MouseUp;
-            inputHook.KeyDown += handler.KeyDown;
-            inputHook.KeyUp += handler.KeyUp;
+        Handlers.ForEach(handler => {
+            InputHook.MouseDownExt += handler.MouseDown;
+            InputHook.MouseUpExt += handler.MouseUp;
+            InputHook.KeyDown += handler.KeyDown;
+            InputHook.KeyUp += handler.KeyUp;
         });
     }
 }

@@ -19,7 +19,7 @@ class VoicemeeterEq : Keybinds.IKeybindHandler {
     }
 
     public void KeyDown(object sender, KeyEventArgs e) {
-        if (!Keybinds.trackedKeyStates[Keys.CapsLock]) return;
+        if (!Keybinds.TrackedKeyStates[Keys.CapsLock]) return;
 
         if (e.KeyCode == Keys.D1) {
             SetStripEQGains(12, -12, -12);

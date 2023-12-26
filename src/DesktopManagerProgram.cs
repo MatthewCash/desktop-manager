@@ -32,7 +32,7 @@ namespace DesktopManager {
                 MonitorPosition.SetMonitorPosition(key, position[0], position[1]);
             }
 
-            Keybinds.handlers.AddRange(new Keybinds.IKeybindHandler[] {
+            Keybinds.Handlers.AddRange(new Keybinds.IKeybindHandler[] {
                 new WindowManagement(),
                 new VoicemeeterEq()
             });
