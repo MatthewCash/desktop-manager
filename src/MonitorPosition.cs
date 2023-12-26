@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 static class MonitorPosition {
@@ -90,6 +91,12 @@ static class MonitorPosition {
         var result = ChangeDisplaySettingsEx(deviceName, ref newMode, IntPtr.Zero, CDS_UPDATEREGISTRY, IntPtr.Zero);
         if (result != 0) {
             throw new Exception($"Failed to change display {deviceName}!");
+        }
+    }
+
+    public static void SetAllMonitorPositions() {
+        foreach ((uint key, var position) in Config.GetConfig().Monitors) {
+            MonitorPosition.SetMonitorPosition(key, position[0], position[1]);
         }
     }
 }

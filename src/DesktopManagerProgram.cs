@@ -28,9 +28,7 @@ namespace DesktopManager {
                 taskbar.RegisterEvents();
             }
 
-            foreach ((uint key, var position) in Config.GetConfig().Monitors) {
-                MonitorPosition.SetMonitorPosition(key, position[0], position[1]);
-            }
+            MonitorPosition.SetAllMonitorPositions();
 
             Keybinds.Handlers.AddRange(new Keybinds.IKeybindHandler[] {
                 new WindowManagement(),
