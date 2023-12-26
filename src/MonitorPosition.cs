@@ -53,7 +53,9 @@ static class MonitorPosition {
 
     const int DM_POSITION = 0x20;
 
-    public static void PrintMonitors() {
+    public static List<string> GetMonitors() {
+        List<string> monitors = new();
+
         for (uint i = 0; true; i++) {
             var device = new User32Wrapper.DISPLAY_DEVICE();
             device.cb = Marshal.SizeOf(device);
@@ -61,10 +63,9 @@ static class MonitorPosition {
             bool success = User32Wrapper.EnumDisplayDevices(null, i, ref device, 0);
             if (!success) break;
 
-            Console.WriteLine(
+            monitors.Add(
                 string.Format(
-                    "Monitor {0}:\n\tName - {1}\n\tString - {2}\n\tFlags - {3}\n\tID - {4}\n\tKey - {5}",
-                    i,
+                    $"Monitor {i}:\n\tName - {0}\n\tString - {1}\n\tFlags - {2}\n\tID - {3}\n\tKey - {4}",
                     device.DeviceName,
                     device.DeviceString,
                     device.StateFlags,
@@ -73,6 +74,8 @@ static class MonitorPosition {
                 )
             );
         }
+
+        return monitors;
     }
 
     public static void SetMonitorPosition(uint displayIndex, int x, int y) {

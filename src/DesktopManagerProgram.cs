@@ -7,7 +7,7 @@ namespace DesktopManager {
             Config.LoadConfig();
 
             if (args.Length > 0 && args[0] == "--print-monitors") {
-                MonitorPosition.PrintMonitors();
+                Console.WriteLine(string.Join('\n', MonitorPosition.GetMonitors()));
             }
 
             var taskbarConfigs = Config.GetConfig().Taskbars;
