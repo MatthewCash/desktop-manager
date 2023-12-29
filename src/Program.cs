@@ -10,23 +10,7 @@ namespace DesktopManager {
                 Console.WriteLine(string.Join('\n', MonitorPosition.GetMonitors()));
             }
 
-            var taskbarConfigs = Config.GetConfig().Taskbars;
-
-            foreach (var taskbarConfig in taskbarConfigs) {
-                var position = taskbarConfig.Position is null ? null : new TaskbarPosition.TaskbarRect(taskbarConfig.Position);
-
-                Taskbar taskbar = new(
-                    taskbarConfig.MonitorIndex == -1,
-                    (uint) taskbarConfig.MonitorIndex,
-                    position,
-                    (WindowAccentState.AccentState) taskbarConfig.AccentState,
-                    taskbarConfig.HideStart,
-                    taskbarConfig.ClockToStart
-                );
-
-                taskbar.FixTaskbar();
-                taskbar.RegisterEvents();
-            }
+            Taskbar.FixAllTaskbars();
 
             MonitorPosition.SetAllMonitorPositions();
 

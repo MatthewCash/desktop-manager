@@ -13,12 +13,12 @@ static class TrayIcon {
         };
 
         ContextMenuStrip contextMenu = new();
-
         trayIcon.ContextMenuStrip = contextMenu;
 
         contextMenu.Items.Add(new ToolStripMenuItem("Reload Config", null, ReloadConfig));
         contextMenu.Items.Add(new ToolStripMenuItem("Print Monitors", null, PrintMonitors));
         contextMenu.Items.Add(new ToolStripSeparator());
+        contextMenu.Items.Add(new ToolStripMenuItem("Fix Taskbars", null, FixTaskbars));
         contextMenu.Items.Add(new ToolStripMenuItem("Reposition Monitors", null, RepositionMonitors));
         contextMenu.Items.Add(new ToolStripSeparator());
         contextMenu.Items.Add(new ToolStripMenuItem("Exit", null, Exit));
@@ -35,6 +35,10 @@ static class TrayIcon {
             string.Join('\n', MonitorPosition.GetMonitors()),
             "Monitors"
         );
+    }
+
+    private static void FixTaskbars(object sender, EventArgs e) {
+        Taskbar.FixAllTaskbars();
     }
 
     private static void RepositionMonitors(object sender, EventArgs e) {

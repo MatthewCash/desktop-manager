@@ -95,4 +95,24 @@ class Taskbar {
         eventManager = new EventManager(this);
         eventManager.RegisterEvents();
     }
+
+    public static void FixAllTaskbars() {
+        var taskbarConfigs = Config.GetConfig().Taskbars;
+
+        foreach (var taskbarConfig in taskbarConfigs) {
+            TaskbarPosition.TaskbarRect position = taskbarConfig.Position is null ? null : new(taskbarConfig.Position);
+
+            Taskbar taskbar = new(
+                taskbarConfig.MonitorIndex == -1,
+                (uint) taskbarConfig.MonitorIndex,
+                position,
+                (WindowAccentState.AccentState) taskbarConfig.AccentState,
+                taskbarConfig.HideStart,
+                taskbarConfig.ClockToStart
+            );
+
+            taskbar.FixTaskbar();
+            taskbar.RegisterEvents();
+        }
+    }
 }
