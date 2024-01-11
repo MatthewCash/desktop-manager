@@ -65,7 +65,7 @@ static class MonitorPosition {
 
             monitors.Add(
                 string.Format(
-                    $"Monitor {i}:\n\tName - {0}\n\tString - {1}\n\tFlags - {2}\n\tID - {3}\n\tKey - {4}",
+                    $"Monitor {i}:\n\tName - {{0}}\n\tString - {{1}}\n\tFlags - {{2}}\n\tID - {{3}}\n\tKey - {{4}}",
                     device.DeviceName,
                     device.DeviceString,
                     device.StateFlags,
