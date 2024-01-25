@@ -3,14 +3,18 @@ using AtgDev.Voicemeeter;
 using AtgDev.Voicemeeter.Utils;
 
 class VoicemeeterEq : Keybinds.IKeybindHandler {
-    readonly RemoteApiWrapper vmrApi;
+    private static RemoteApiWrapper vmrApi;
 
     public VoicemeeterEq() {
+        ConnectVoicemeeter();
+    }
+
+    public static void ConnectVoicemeeter() {
         vmrApi = new RemoteApiWrapper(PathHelper.GetDllPath());
         vmrApi.Login();
     }
 
-    void SetStripEQGains(float gain1, float gain2, float gain3) {
+    private static void SetStripEQGains(float gain1, float gain2, float gain3) {
         uint mediaStripId = Config.GetConfig().MediaStripId;
 
         vmrApi.SetParameter($"Strip[{mediaStripId}].EQGain1", gain1);

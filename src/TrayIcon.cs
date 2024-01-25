@@ -9,19 +9,19 @@ static class TrayIcon {
         trayIcon = new() {
             Icon = SystemIcons.Application, // TODO: get an actual icon?
             Text = "Desktop Manager",
-            Visible = true
+            Visible = true,
+            ContextMenuStrip = new()
         };
+        var items = trayIcon.ContextMenuStrip.Items;
 
-        ContextMenuStrip contextMenu = new();
-        trayIcon.ContextMenuStrip = contextMenu;
-
-        contextMenu.Items.Add(new ToolStripMenuItem("Reload Config", null, ReloadConfig));
-        contextMenu.Items.Add(new ToolStripMenuItem("Print Monitors", null, PrintMonitors));
-        contextMenu.Items.Add(new ToolStripSeparator());
-        contextMenu.Items.Add(new ToolStripMenuItem("Fix Taskbars", null, FixTaskbars));
-        contextMenu.Items.Add(new ToolStripMenuItem("Reposition Monitors", null, RepositionMonitors));
-        contextMenu.Items.Add(new ToolStripSeparator());
-        contextMenu.Items.Add(new ToolStripMenuItem("Exit", null, Exit));
+        items.Add(new ToolStripMenuItem("Reload Config", null, ReloadConfig));
+        items.Add(new ToolStripMenuItem("Print Monitors", null, PrintMonitors));
+        items.Add(new ToolStripSeparator());
+        items.Add(new ToolStripMenuItem("Fix Taskbars", null, FixTaskbars));
+        items.Add(new ToolStripMenuItem("Reposition Monitors", null, RepositionMonitors));
+        items.Add(new ToolStripMenuItem("Reconnect VoiceMeeter", null, ConnectVoicemeeter));
+        items.Add(new ToolStripSeparator());
+        items.Add(new ToolStripMenuItem("Exit", null, Exit));
 
         Application.Run();
     }
@@ -43,6 +43,10 @@ static class TrayIcon {
 
     private static void RepositionMonitors(object sender, EventArgs e) {
         MonitorPosition.SetAllMonitorPositions();
+    }
+
+    private static void ConnectVoicemeeter(object sender, EventArgs e) {
+        VoicemeeterEq.ConnectVoicemeeter();
     }
 
     private static void Exit(object sender, EventArgs e) {
