@@ -77,28 +77,8 @@ public static class User32Wrapper {
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 
-    [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-    public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, long dwNewLong);
 
-    [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
-    public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
-    public const int GWL_STYLE = -16;
-    public const int GWL_EXSTYLE = -20;
-
-    public const Int64 WS_CAPTION = 0x00C00000;
-    public const Int64 WS_SYSMENU = 0x00080000;
-    public const Int64 WS_BORDER = 0x00800000;
-    public const Int64 WS_THICKFRAME = 0x00040000;
-    public const Int64 WS_MINIMIZEBOX = 0x00020000;
-    public const Int64 WS_MAXIMIZEBOX = 0x00020000;
-
-    public const Int64 WS_EX_LAYERED = 0x00080000;
-    public const Int64 WS_EX_DLGMODALFRAME = 0x00000001;
-    public const Int64 WS_EX_CLIENTEDGE = 0x00000200;
-    public const Int64 WS_EX_STATICEDGE = 0x00020000;
-
-    public const uint LWA_ALPHA = 0x00000002;
 
     [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
     public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, UInt32 uFlags);
@@ -112,8 +92,7 @@ public static class User32Wrapper {
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern int GetClassName(IntPtr hWnd, char[] lpClassName, int nMaxCount);
 
-    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    public static extern bool SetLayeredWindowAttributes(IntPtr hWnd, uint crKey, byte bAlpha, uint dwFlags);
+
 
     [DllImport("user32.dll")]
     public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);

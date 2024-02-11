@@ -23,6 +23,8 @@ namespace DesktopManager {
             Thread trayIconThread = new(TrayIcon.Create);
             trayIconThread.Start();
 
+            WindowManager.FixAllWindows();
+
             Console.WriteLine("Starting Message Pump...");
             EventManager.StartMessagePump();
         }

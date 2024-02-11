@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static User32Wrapper;
 
 class EventManager {
     [DllImport("user32.dll", SetLastError = true)]
@@ -38,18 +37,6 @@ class EventManager {
 
     void OnObjectFocus(IntPtr hWinEventHook, uint eventType, IntPtr hWnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) {
         taskbar.FixTaskbar();
-
-        char[] classNameBuffer = new char[256];
-        GetClassName(hWnd, classNameBuffer, 256);
-        String className = new String(classNameBuffer).Trim('\0');
-
-        var transparentWindows = Config.GetConfig().TransparentWindows;
-
-        if (transparentWindows.TryGetValue(className, out byte alpha)) {
-            long exStyle = (long) GetWindowLongPtr(hWnd, GWL_EXSTYLE);
-            if ((exStyle & WS_EX_LAYERED) == 0) SetWindowLongPtr(hWnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED);
-            SetLayeredWindowAttributes(hWnd, 0, alpha, LWA_ALPHA);
-        }
     }
 
     void OnObjectLocationChange(IntPtr hWinEventHook, uint eventType, IntPtr hWnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) {

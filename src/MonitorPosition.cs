@@ -99,7 +99,7 @@ static class MonitorPosition {
 
     public static void SetAllMonitorPositions() {
         foreach ((uint key, var position) in Config.GetConfig().Monitors) {
-            MonitorPosition.SetMonitorPosition(key, position[0], position[1]);
+            SetMonitorPosition(key, position[0], position[1]);
         }
     }
 }

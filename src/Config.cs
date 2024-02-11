@@ -5,8 +5,25 @@ using System.Runtime.Serialization;
 using Tomlyn;
 
 class Config {
-    [DataMember(Name = "window_transparency")]
-    public Dictionary<string, byte> TransparentWindows { get; set; }
+    public class WindowConfig {
+        [DataMember(Name = "process")]
+        public string Process { get; set; }
+
+        [DataMember(Name = "class")]
+        public string Class { get; set; }
+
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+
+        [DataMember(Name = "position")]
+        public int[] Position { get; set; }
+
+        [DataMember(Name = "transparency")]
+        public int? Transparency { get; set; }
+    }
+
+    [DataMember(Name = "windows")]
+    public List<WindowConfig> Windows { get; set; }
 
     public class TaskbarConfig {
         [DataMember(Name = "monitor")]

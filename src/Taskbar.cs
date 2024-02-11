@@ -12,7 +12,7 @@ class Taskbar {
     public uint monitorIndex;
     public bool hideStart;
     public bool clockToStart;
-    readonly TaskbarPosition.TaskbarRect position = null;
+    readonly WindowPosition.WindowRect position = null;
     readonly WindowAccentState.AccentState accentState;
 
     EventManager eventManager;
@@ -20,7 +20,7 @@ class Taskbar {
     public Taskbar(
         bool primary,
         uint monitorIndex,
-        TaskbarPosition.TaskbarRect position,
+        WindowPosition.WindowRect position,
         WindowAccentState.AccentState accentState,
         bool hideStart = false,
         bool clockToStart = false
@@ -68,7 +68,7 @@ class Taskbar {
     }
 
     public void SetPosition() {
-        TaskbarPosition.SetTaskbarPositionSize(taskbarHandle, position);
+        WindowPosition.SetPosition(taskbarHandle, position);
     }
 
     public void SetAccentState() {
@@ -100,7 +100,7 @@ class Taskbar {
         var taskbarConfigs = Config.GetConfig().Taskbars;
 
         foreach (var taskbarConfig in taskbarConfigs) {
-            TaskbarPosition.TaskbarRect position = taskbarConfig.Position is null ? null : new(taskbarConfig.Position);
+            WindowPosition.WindowRect position = taskbarConfig.Position is null ? null : new(taskbarConfig.Position);
 
             Taskbar taskbar = new(
                 taskbarConfig.MonitorIndex == -1,
