@@ -18,6 +18,7 @@ static class TrayIcon {
         items.Add(new ToolStripMenuItem("Print Monitors", null, PrintMonitors));
         items.Add(new ToolStripSeparator());
         items.Add(new ToolStripMenuItem("Fix Taskbars", null, FixTaskbars));
+        items.Add(new ToolStripMenuItem("Fix Windows", null, FixWindows));
         items.Add(new ToolStripMenuItem("Reposition Monitors", null, RepositionMonitors));
         items.Add(new ToolStripMenuItem("Reconnect VoiceMeeter", null, ConnectVoicemeeter));
         items.Add(new ToolStripSeparator());
@@ -39,6 +40,10 @@ static class TrayIcon {
 
     private static void FixTaskbars(object sender, EventArgs e) {
         Taskbar.FixAllTaskbars();
+    }
+
+    private static void FixWindows(object sender, EventArgs e) {
+        WindowManager.FixAllWindows();
     }
 
     private static void RepositionMonitors(object sender, EventArgs e) {
