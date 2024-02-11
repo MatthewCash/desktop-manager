@@ -1,8 +1,11 @@
 voicemeeter_media_strip_id = 5
 disabled_windows = []
 
-[window_transparency]
-example_class = 200
+[[windows]]
+process = "example_process"
+class = "example_wmclass"
+position = [ 2576, 633, 1618, 751 ]
+transparency = 130
 
 # Accent state should be an integer of
 # ACCENT_DISABLED = 0
@@ -12,7 +15,7 @@ example_class = 200
 # ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
 # ACCENT_ENABLE_TRANSPARANT = 6
 
-# monitor should be the monitor index EXCEPT the primary taskbar should be -1
+# monitor should be the monitor index EXCEPT for the primary taskbar, which should be -1
 
 [[taskbars]]
 monitor = -1
