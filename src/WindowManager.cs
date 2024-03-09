@@ -57,6 +57,8 @@ static class WindowManager {
 
             if (window.Position is not null) WindowPosition.SetPosition(hWnd, new(window.Position));
             if (window.Transparency is not null) WindowAccentState.SetTransparency(hWnd, (byte) window.Transparency);
+
+            if (window.Minimized) WindowState.Minimize(hWnd);
         }
     }
 }

@@ -26,7 +26,11 @@ static class WindowPosition {
     [DllImport("user32.dll", SetLastError = true)]
     static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
     public static void SetPosition(IntPtr hWnd, WindowRect position) {
+        ShowWindow(hWnd, 1); // Window needs to be visible to move it
         MoveWindow(hWnd, position.x, position.y, position.width, position.height, true);
     }
 }
