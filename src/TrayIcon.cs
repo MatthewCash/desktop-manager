@@ -15,6 +15,7 @@ static class TrayIcon {
         var items = trayIcon.ContextMenuStrip.Items;
 
         items.Add(new ToolStripMenuItem("Reload Config", null, ReloadConfig));
+        items.Add(new ToolStripMenuItem("Reload Config & Fix All", null, ReloadConfigFixAll));
         items.Add(new ToolStripMenuItem("Print Monitors", null, PrintMonitors));
         items.Add(new ToolStripSeparator());
         items.Add(new ToolStripMenuItem("Fix Taskbars", null, FixTaskbars));
@@ -29,6 +30,13 @@ static class TrayIcon {
 
     private static void ReloadConfig(object sender, EventArgs e) {
         Config.LoadConfig();
+    }
+
+    private static void ReloadConfigFixAll(object sender, EventArgs e) {
+        ReloadConfig(sender, e);
+        FixTaskbars(sender, e);
+        FixWindows(sender, e);
+        RepositionMonitors(sender, e);
     }
 
     private static void PrintMonitors(object sender, EventArgs e) {
