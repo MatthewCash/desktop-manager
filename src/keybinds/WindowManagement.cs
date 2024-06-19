@@ -2,31 +2,11 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
+using static WindowStateManager;
 
 class WindowManagement : Keybinds.IKeybindHandler {
     [DllImport("user32.dll")]
     static extern IntPtr GetForegroundWindow();
-
-    [DllImport("user32.dll")]
-    static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct WINDOWPLACEMENT {
-        public int length;
-        public int flags;
-        public int showCmd;
-        public System.Drawing.Point ptMinPosition;
-        public System.Drawing.Point ptMaxPosition;
-        public System.Drawing.Rectangle rcNormalPosition;
-    }
-
-
-    [DllImport("user32.dll")]
-    public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
-
-    const int SW_MAXIMIZE = 3;
-    const int SW_MINIMIZE = 6;
-    const int SW_NORMAL = 1;
 
     private static bool ShouldIgnoreWindow(IntPtr hWnd) {
         var classNameBuffer = new char[256];
@@ -39,7 +19,7 @@ class WindowManagement : Keybinds.IKeybindHandler {
     private static bool IsWindowMaximized(IntPtr hWnd) {
         WINDOWPLACEMENT placement = new() { length = Marshal.SizeOf<WINDOWPLACEMENT>() };
         GetWindowPlacement(hWnd, ref placement);
-        return placement.showCmd == SW_MAXIMIZE;
+        return placement.showCmd == WindowState.Maximized;
     }
 
     public void MouseDown(object sender, MouseEventExtArgs e) {
@@ -64,10 +44,10 @@ class WindowManagement : Keybinds.IKeybindHandler {
 
             if (Keybinds.TrackedKeyStates[Keys.LMenu]) {
                 // Restore
-                ShowWindowAsync(hWnd, SW_NORMAL);
+                ShowWindowAsync(hWnd, WindowState.Normal);
             } else {
                 // Minimize
-                ShowWindowAsync(hWnd, SW_MINIMIZE);
+                ShowWindowAsync(hWnd, WindowState.Minimized);
             }
         }
         if (e.Button == MouseButtons.XButton2) {
@@ -86,10 +66,10 @@ class WindowManagement : Keybinds.IKeybindHandler {
 
             if (IsWindowMaximized(hWnd)) {
                 // Restore
-                ShowWindowAsync(hWnd, SW_NORMAL);
+                ShowWindowAsync(hWnd, WindowState.Normal);
             } else {
                 // Maximize
-                ShowWindowAsync(hWnd, SW_MAXIMIZE);
+                ShowWindowAsync(hWnd, WindowState.Maximized);
             }
         }
     }

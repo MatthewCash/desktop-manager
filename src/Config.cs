@@ -21,8 +21,11 @@ class Config {
         [DataMember(Name = "transparency")]
         public int? Transparency { get; set; }
 
-        [DataMember(Name = "minimized")]
-        public bool Minimized { get; set; }
+        [DataMember(Name = "is_state")]
+        public WindowStateManager.WindowState? IsState { get; set; }
+
+        [DataMember(Name = "set_state")]
+        public WindowStateManager.WindowState? SetState { get; set; }
     }
 
     [DataMember(Name = "windows")]

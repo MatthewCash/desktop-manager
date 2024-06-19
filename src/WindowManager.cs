@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using static WindowStateManager;
 
 static class WindowManager {
     [DllImport("user32.dll", SetLastError = true)]
@@ -21,7 +22,7 @@ static class WindowManager {
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     static extern int GetWindowTextLength(IntPtr hWnd);
 
-    static IntPtr FindWindow(string className, string processName, string title) {
+    static IntPtr FindWindow(string className, string processName, string title, WindowState? state) {
         IntPtr hWndFound = IntPtr.Zero;
         EnumWindows((hWnd, param) => {
             if (className is not null) {
@@ -43,8 +44,14 @@ static class WindowManager {
                 if (windowTitle.ToString().Trim('\0') != title) return true;
             }
 
+            if (state.HasValue) {
+                WINDOWPLACEMENT placement = new() { length = Marshal.SizeOf<WINDOWPLACEMENT>() };
+                GetWindowPlacement(hWnd, ref placement);
+                if (placement.showCmd != state.Value) return true;
+            }
+
             hWndFound = hWnd;
-            return true;
+            return false;
         }, IntPtr.Zero);
 
         return hWndFound;
@@ -52,13 +59,13 @@ static class WindowManager {
 
     public static void FixAllWindows() {
         foreach (var window in Config.GetConfig().Windows) {
-            IntPtr hWnd = FindWindow(window.Class, window.Process, window.Title);
+            IntPtr hWnd = FindWindow(window.Class, window.Process, window.Title, window.IsState);
             if (hWnd == IntPtr.Zero) continue;
 
             if (window.Position is not null) WindowPosition.SetPosition(hWnd, new(window.Position));
             if (window.Transparency is not null) WindowAccentState.SetTransparency(hWnd, (byte) window.Transparency);
 
-            if (window.Minimized) WindowState.Minimize(hWnd);
+            if (window.SetState.HasValue) ShowWindowAsync(hWnd, window.SetState.Value);
         }
     }
 }
