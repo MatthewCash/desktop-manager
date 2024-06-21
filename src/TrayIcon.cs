@@ -34,9 +34,9 @@ static class TrayIcon {
 
     private static void ReloadConfigFixAll(object sender, EventArgs e) {
         ReloadConfig(sender, e);
+        RepositionMonitors(sender, e);
         FixTaskbars(sender, e);
         FixWindows(sender, e);
-        RepositionMonitors(sender, e);
     }
 
     private static void PrintMonitors(object sender, EventArgs e) {
