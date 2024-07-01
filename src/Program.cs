@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace DesktopManager {
@@ -6,7 +7,7 @@ namespace DesktopManager {
         static void Main(string[] args) {
             Config.LoadConfig();
 
-            if (args.Length > 0 && args[0] == "--print-monitors") {
+            if (args.Contains("--print-monitors")) {
                 Console.WriteLine(string.Join('\n', MonitorPosition.GetMonitors()));
             }
 
