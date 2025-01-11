@@ -1,5 +1,6 @@
 voicemeeter_media_strip_id = 5
 disabled_windows = []
+wheel_dev_id = "USB\VID_XXXX&PID_XXXX&REV_XXXX" # hardware id from device manager
 
 [[windows]]
 process = "example_process"
