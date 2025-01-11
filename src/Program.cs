@@ -17,7 +17,8 @@ namespace DesktopManager {
 
             Keybinds.Handlers.AddRange(new Keybinds.IKeybindHandler[] {
                 new WindowManagement(),
-                new VoicemeeterEq()
+                new VoicemeeterEq(),
+                new RecalibrateWheel(),
             });
             Keybinds.RegisterKeybinds();
 
